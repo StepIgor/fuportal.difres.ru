@@ -1,0 +1,15 @@
+{
+  "short_name": "ЛК Руководителя",
+  "name": "Финансовый университет",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#007D8C",
+  "background_color": "#F2F2F2"
+}
