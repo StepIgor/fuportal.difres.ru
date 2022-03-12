@@ -1,0 +1,8 @@
+.ws-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 48px);
+}

@@ -1,0 +1,103 @@
+.modal-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.visible {
+    display: flex;
+}
+
+.modal-window {
+    padding: 12px;
+    color: black;
+    font-size: 18px;
+    border-radius: 5px;
+    background: var(--background);
+    box-shadow: 0px 0px 7px 5px gray;
+}
+
+@media (min-width: 999px) {
+    .modal-window {
+        width: 66vw;
+        height: 60vh;
+    }
+}
+
+@media (max-width: 998px) {
+    .modal-window {
+        width: 80vw;
+        height: 70vh;
+    }
+}
+
+.modal-title {
+    color: var(--foreground);
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.modal-title > div:first-child {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.modal-title > div:last-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
+.modal-title > div:last-child:hover {
+    background: rgba(0,0,0,0.15);
+}
+
+.hor-line-full {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.08);
+    width: 100%;
+    margin-top: 16px;
+}
+
+.modal-content {
+    margin-top: 12px;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    gap: 5px;
+    align-items: center;
+}
+
+.modal-content-row {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5px;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.modal-content-row > div:first-child {
+    color: var(--foreground);
+    font-weight: bold;
+    font-size: 14px;
+    width: 33%;
+}
+
+.modal-content-row > div:last-child {
+    color: black;
+    font-size: 14px;
+    flex-grow: 1;
+}

@@ -42,7 +42,7 @@ function App() {
         }
     })
 
-    return page ? page == 'login' ? <LoginPage editPage={editPage} /> : <WorkspacePage /> : null
+    return page ? page == 'login' ? <LoginPage editPage={editPage} /> : <WorkspacePage editPage={editPage} /> : null
 }
 
 export default App;
