@@ -6,3 +6,22 @@
     top: 0;
     width: calc(100% - 48px);
 }
+
+.menu-and-content-blocks-container {
+    display: flex;
+}
+
+@media (min-width: 999px){
+    .menu-and-content-blocks-container {
+        flex-flow: row nowrap;
+        width: calc(100% + 48px);
+    }
+}
+
+@media (max-width: 998px){
+    .menu-and-content-blocks-container {
+        flex-flow: column nowrap;
+        width: calc(100% + 48px);
+    }
+}
+

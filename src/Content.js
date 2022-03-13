@@ -1,7 +1,7 @@
-function Content(){
+function Content(props){
     return (
         <div>
-            Content
+            {props.subpage}
         </div>
     )
 }
