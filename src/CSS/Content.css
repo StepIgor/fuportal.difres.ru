@@ -1,0 +1,10 @@
+.content-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+@media (min-width: 999px) {
+    .content-container{
+        height: calc(100vh - 145px);
+    }
+}

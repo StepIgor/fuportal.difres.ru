@@ -13,7 +13,7 @@ function WorkspacePage(props) {
             <Header editPage={props.editPage} />
             <div className={`menu-and-content-blocks-container`}>
                 <NavMenu subpage={subpage} editSubpage={editSubpage} />
-                <Content subpage={subpage} />
+                <Content subpage={subpage} editSubpage={editSubpage} />
             </div>
         </div>
     )

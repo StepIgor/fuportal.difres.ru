@@ -1,0 +1,159 @@
+.emp-sp-table-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+.emp-sp-table-container > table > thead {
+    font-weight: bold;
+    color: var(--foreground);
+    border-bottom: 2px solid var(--tableborder);
+}
+
+.emp-sp-table-container > table > thead td > * {
+    vertical-align: middle;
+}
+
+.emp-sp-table-container > table > thead td {
+    cursor: pointer;
+}
+
+.emp-sp-table-container > table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.emp-sp-table-container > table td {
+    border: 1px solid var(--tableborder);
+    padding: 4px;
+}
+
+.emp-sp-table-container > table > tbody td {
+    cursor: pointer;
+}
+
+.emp-sp-table-container > table > tbody tr {
+    background: var(--tablerow);
+}
+
+.emp-sp-table-container > table > tbody tr:hover {
+    background: var(--tablerowhover);
+}
+
+.emp-sp-filter-rb-group {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    flex-grow: 1;
+    gap: 8px;
+}
+
+.emp-sp-filter-rb-option {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    cursor: pointer;
+}
+
+.emp-sp-filter-rb-option > i {
+    color: var(--foreground);
+}
+
+.emp-sp-filter-container > input {
+    margin: 0;
+    padding: 8px;
+    border-radius: 5px;
+    background: var(--tablerow);
+}
+
+
+@media (min-width: 999px){
+    .emp-sp-filter-container > input {
+        width: calc(100% - 12px);
+    }
+
+    .emp-sp-filter-rb-option {
+        white-space: nowrap;
+    }
+
+    .emp-sp-table-container{
+        margin: 24px 12px;
+    }
+
+    .emp-sp-filter-container {
+        margin: 24px 12px;
+    }
+
+    .emp-sp-table-container > table {
+        font-size: 14px;
+    }
+
+    .emp-sp-table-container > table > tbody td {
+        height: 30px;
+    }
+
+    .emp-sp-table-container > table > thead td {
+        height: 30px;
+    }
+
+    .emp-sp-filter-container {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+    }
+
+    .emp-sp-filter-rb-option {
+        font-size: 14px;
+    }
+
+    .emp-sp-filter-container > input {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 998px){
+    .emp-sp-table-container{
+        margin: 24px 4px;
+    }
+
+    .emp-sp-filter-container {
+        margin: 24px 4px;
+    }
+
+    .emp-sp-table-container > table {
+        font-size: 11px;
+    }
+
+    .emp-sp-table-container > table > tbody td {
+        height: 75px;
+    }
+
+    .emp-sp-table-container > table > thead td {
+        height: 40px;
+    }
+
+    .emp-sp-filter-container {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    .emp-sp-filter-rb-option {
+        font-size: 10px;
+    }
+
+    .emp-sp-filter-container > input {
+        font-size: 14px;
+    }
+
+    .emp-sp-filter-container {
+        gap: 8px;
+    }
+
+    .emp-sp-filter-rb-option {
+        white-space: normal;
+    }
+
+    .emp-sp-filter-container > input {
+        width: calc(100% - 20px);
+    }
+}
