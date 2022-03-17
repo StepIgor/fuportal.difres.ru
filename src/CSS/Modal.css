@@ -29,12 +29,36 @@
         width: 66vw;
         height: 60vh;
     }
+
+    .modal-content-row > div:first-child, .modal-block > div:first-child {
+        font-size: 14px;
+    }
+
+    .modal-content-row > div:last-child {
+        font-size: 14px;
+    }
+
+    .modal-block table {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 998px) {
     .modal-window {
         width: 80vw;
         height: 70vh;
+    }
+
+    .modal-content-row > div:first-child, .modal-block > div:first-child {
+        font-size: 12px;
+    }
+
+    .modal-content-row > div:last-child {
+        font-size: 12px;
+    }
+
+    .modal-block table {
+        font-size: 12px;
     }
 }
 
@@ -92,12 +116,65 @@
 .modal-content-row > div:first-child {
     color: var(--foreground);
     font-weight: bold;
-    font-size: 14px;
     width: 33%;
+    min-width: 33%;
 }
 
 .modal-content-row > div:last-child {
     color: black;
-    font-size: 14px;
     flex-grow: 1;
+}
+
+.modal-block {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.modal-block > div:first-child {
+    color: var(--foreground);
+    font-weight: bold;
+}
+
+.modal-block > div {
+    width: 100%;
+}
+
+.modal-block table > thead {
+    font-weight: bold;
+    color: black;
+    border-bottom: 2px solid var(--tableborder);
+}
+
+.modal-block table > thead td > * {
+    vertical-align: middle;
+}
+
+.modal-block table > thead td {
+    cursor: pointer;
+}
+
+.modal-block table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modal-block table td {
+    border: 1px solid var(--tableborder);
+    padding: 4px;
+}
+
+.modal-block table > tbody td {
+    cursor: pointer;
+}
+
+.modal-block table > tbody tr {
+    background: var(--tablerow);
+}
+
+.modal-block table > tbody tr:hover {
+    background: var(--tablerowhover);
 }

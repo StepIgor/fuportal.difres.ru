@@ -1,6 +1,7 @@
 import "./CSS/EmployeesSubpage.css";
 import {useEffect, useState} from "react";
 import {connectionString} from "../vars";
+import Modal from "../Modal";
 
 function EmployeesSubpage(props) {
 
@@ -9,6 +10,10 @@ function EmployeesSubpage(props) {
     let [filterMode, editFilterMode] = useState('name')
     let [userFilterText, editUserFilterText] = useState()
     let [filterByBirthdate, editFilterByBirthdate] = useState(false)
+
+    //emp card
+    let [modalVisible, editModalVisible] = useState(false);
+    let [empIdClicked, editEmpIdClicked] = useState();
 
     useEffect(() => {
         if (employees != null) return;
@@ -34,6 +39,7 @@ function EmployeesSubpage(props) {
 
     return (
         <div className={`emp-sp-container`}>
+            <Modal visible={modalVisible} editVisible={editModalVisible} about='employee' id={empIdClicked} />
             <div className={`emp-sp-filter-container`}>
                 <input placeholder="Поиск по параметру..." type="text" maxLength="64" onChange={(e) => {editUserFilterText(e.target.value)}} />
                 <div className={`emp-sp-filter-rb-group`}>
@@ -121,7 +127,7 @@ function EmployeesSubpage(props) {
                             }
                         }).map((emp, ind) => {
                             return (
-                                <tr key={emp.id}>
+                                <tr key={emp.id} onClick={()=>{editEmpIdClicked(emp.id); editModalVisible(true);}}>
                                     <td>
                                         {ind + 1}
                                     </td>
