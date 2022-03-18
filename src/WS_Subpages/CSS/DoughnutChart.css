@@ -1,0 +1,11 @@
+@media (min-width: 999px) {
+    .chart-no-data-label {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 998px){
+    .chart-no-data-label {
+        font-size: 12px;
+    }
+}

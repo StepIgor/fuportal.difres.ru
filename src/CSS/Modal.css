@@ -22,6 +22,7 @@
     border-radius: 5px;
     background: var(--background);
     box-shadow: 0px 0px 7px 5px gray;
+    overflow-y: auto;
 }
 
 @media (min-width: 999px) {
@@ -177,4 +178,67 @@
 
 .modal-block table > tbody tr:hover {
     background: var(--tablerowhover);
+}
+
+@media (max-width: 998px){
+    .modal-date-filter-container {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .modal-date-filter-container input {
+        font-size: 12px;
+    }
+
+    .modal-chart-and-table {
+        flex-flow: column nowrap;
+    }
+}
+
+@media (min-width: 999px){
+    .modal-date-filter-container {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 8px;
+        font-size: 14px;
+    }
+
+    .modal-date-filter-container input {
+        font-size: 14px;
+    }
+
+    .modal-chart-and-table {
+        flex-flow: row nowrap;
+    }
+
+    .modal-chart-and-table *:first-child {
+        max-width: 50%;
+    }
+}
+
+.modal-date-filter-container > div {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5px;
+    align-items: center;
+}
+
+.modal-date-filter-container input {
+    margin: 0;
+    padding: 0;
+}
+
+.modal-date-filter-container i {
+    cursor: pointer;
+    color: var(--foreground);
+}
+
+.modal-date-filter-container i:hover {
+    background: var(--tablerowhover);
+}
+
+.modal-chart-and-table {
+    display: flex;
 }

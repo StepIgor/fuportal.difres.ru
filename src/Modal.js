@@ -2,16 +2,21 @@ import "./CSS/Modal.css"
 import {useEffect, useState} from "react";
 import {Fade} from "react-reveal";
 import {connectionString} from "./vars";
+import DoughnutChart from "./WS_Subpages/DoughnutChart";
 
 function Modal(props) {
 
     let [modalContent, editModalContent] = useState()
     let [lastAbout, editLastAbout] = useState()
     let [lastId, editLastId] = useState();
+    let [filterStartDate, editFilterStartDate] = useState((new Date().toISOString().split('T')[0].split('-')[0] - 2)+'-01-01');
+    let [filterEndDate, editFilterEndDate] = useState(new Date().toISOString().split('T')[0]);
+    let [filterDatesWereChanged, editFilterDatesWereChanged] = useState(true);
 
     useEffect(() => {
         if (props.visible == false) return;
-        if (lastAbout == props.about && lastId == props.id) return;
+        if (lastAbout == props.about && lastId == props.id && filterDatesWereChanged == false) return;
+        editFilterDatesWereChanged(false);
         if (props.about == 'user') {
             editLastAbout('user');
             fetch(`${connectionString}/getUserInfo`, {
@@ -153,6 +158,48 @@ function Modal(props) {
                                 </table>
                             </div>
                         </div>
+                        <div className={`modal-block`}>
+                            <div>
+                                Статистика выставляемых оценок:
+                            </div>
+                            <div className={`modal-date-filter-container`}>
+                                <div>
+                                    <span>С</span>
+                                    <input type="date" onChange={(e) => {editFilterStartDate(e.target.value); editFilterDatesWereChanged(true);}} value={filterStartDate} />
+                                    <span>по</span>
+                                    <input type="date" onChange={(e) => {editFilterEndDate(e.target.value); editFilterDatesWereChanged(true);}} value={filterEndDate} />
+                                </div>
+                                <div>
+                                    <span>По семестрам:</span>
+                                    <i className={`material-icons`} onClick={() => {
+                                        if (Number.parseInt(filterEndDate.split('-')[1]) >= 2 && Number.parseInt(filterEndDate.split('-')[1]) <= 8){
+                                            editFilterEndDate(filterEndDate.split('-')[0]+'-01-31');
+                                            editFilterStartDate((filterEndDate.split('-')[0] - 1)+'-09-01');
+                                        } else {
+                                            editFilterEndDate((filterEndDate.split('-')[0] - 1)+'-08-31');
+                                            editFilterStartDate((filterEndDate.split('-')[0] - 1)+'-02-01');
+                                        }
+                                        editFilterDatesWereChanged(true);
+                                    }}>navigate_before</i>
+                                    <i className={`material-icons`} onClick={() => {
+                                        if (Number.parseInt(filterEndDate.split('-')[1]) >= 2 && Number.parseInt(filterEndDate.split('-')[1]) <= 8){
+                                            editFilterEndDate((Number.parseInt(filterEndDate.split('-')[0]) + 1)+'-01-31');
+                                            editFilterStartDate(filterEndDate.split('-')[0]+'-09-01');
+                                        } else {
+                                            editFilterEndDate(filterEndDate.split('-')[0]+'-08-31');
+                                            editFilterStartDate(filterEndDate.split('-')[0]+'-02-01');
+                                        }
+                                        editFilterDatesWereChanged(true);
+                                    }}>navigate_next</i>
+                                </div>
+                            </div>
+                            <div className={`modal-chart-and-table`}>
+                                <DoughnutChart about='employee' id={props.id} startDate={filterStartDate} endDate={filterEndDate} />
+                                <div>
+                                    {/*replace with table component*/}
+                                </div>
+                            </div>
+                        </div>
                     </div>);
                 } else {
                     editModalContent(<div className={`modal-content`}>
@@ -168,7 +215,9 @@ function Modal(props) {
     return (
         <Fade>
             <div className={`modal-wrapper ${props.visible ? 'visible' : ''}`} onClick={(e) => {
-                props.editVisible(false)
+                props.editVisible(false);
+                editFilterStartDate((new Date().toISOString().split('T')[0].split('-')[0] - 2)+'-01-01');
+                editFilterEndDate(new Date().toISOString().split('T')[0]);
             }}>
                 <div className='modal-window' onClick={(e) => {
                     e.stopPropagation()
@@ -179,7 +228,9 @@ function Modal(props) {
                             о {props.about == 'user' ? 'пользователе' : props.about == 'student' ? 'студенте' : 'сотруднике'}
                         </div>
                         <div onClick={() => {
-                            props.editVisible(false)
+                            props.editVisible(false);
+                            editFilterStartDate((new Date().toISOString().split('T')[0].split('-')[0] - 2)+'-01-01');
+                            editFilterEndDate(new Date().toISOString().split('T')[0]);
                         }}>
                             <i className={`material-icons modal-close-but`}>close</i>
                         </div>
