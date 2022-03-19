@@ -194,6 +194,11 @@
 
     .modal-chart-and-table {
         flex-flow: column nowrap;
+        gap: 8px;
+    }
+
+    .modal-chart-and-table > *:first-child {
+        max-height: 150px;
     }
 }
 
@@ -213,8 +218,17 @@
         flex-flow: row nowrap;
     }
 
-    .modal-chart-and-table *:first-child {
+    .modal-chart-and-table > *:first-child {
+        max-height: 200px;
         max-width: 50%;
+    }
+
+    .modal-chart-and-table div:last-child {
+        flex-grow: 1;
+    }
+
+    .modal-chart-and-table div:last-child table {
+        width: 100%;
     }
 }
 

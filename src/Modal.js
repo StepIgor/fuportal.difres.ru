@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Fade} from "react-reveal";
 import {connectionString} from "./vars";
 import DoughnutChart from "./WS_Subpages/DoughnutChart";
+import TableGroupByComponent from "./WS_Subpages/TableGroupByComponent";
 
 function Modal(props) {
 
@@ -196,7 +197,7 @@ function Modal(props) {
                             <div className={`modal-chart-and-table`}>
                                 <DoughnutChart about='employee' id={props.id} startDate={filterStartDate} endDate={filterEndDate} />
                                 <div>
-                                    {/*replace with table component*/}
+                                    <TableGroupByComponent about="employee" id={props.id} startDate={filterStartDate} endDate={filterEndDate} />
                                 </div>
                             </div>
                         </div>

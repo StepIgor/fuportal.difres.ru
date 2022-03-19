@@ -97,7 +97,6 @@ function DoughnutChart(props) {
                       }}
                       data={data}
                       plugins={[ChartDataLabels]}
-                      width={"100%"}
                       fontSize={14}
             />
         )
