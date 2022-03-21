@@ -90,7 +90,10 @@ function Header(props){
                     </div>
                 }
             </div>
-            <Modal visible={showUserCard} editVisible={editShowUserCard} about='user' />
+            {
+                showUserCard &&
+                <Modal editVisible={editShowUserCard} about='user' />
+            }
         </div>
     )
 }

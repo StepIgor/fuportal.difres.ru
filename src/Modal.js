@@ -8,18 +8,11 @@ import TableGroupByComponent from "./WS_Subpages/TableGroupByComponent";
 function Modal(props) {
 
     let [modalContent, editModalContent] = useState()
-    let [lastAbout, editLastAbout] = useState()
-    let [lastId, editLastId] = useState();
     let [filterStartDate, editFilterStartDate] = useState((new Date().toISOString().split('T')[0].split('-')[0] - 2) + '-01-01');
     let [filterEndDate, editFilterEndDate] = useState(new Date().toISOString().split('T')[0]);
-    let [filterDatesWereChanged, editFilterDatesWereChanged] = useState(true);
 
     useEffect(() => {
-        if (props.visible == false) return;
-        if (lastAbout == props.about && lastId == props.id && filterDatesWereChanged == false) return;
-        editFilterDatesWereChanged(false);
         if (props.about == 'user') {
-            editLastAbout('user');
             fetch(`${connectionString}/getUserInfo`, {
                 method: 'POST',
                 headers: {
@@ -66,8 +59,6 @@ function Modal(props) {
                 alert('Нет связи с сервером')
             })
         } else if (props.about == 'employee') {
-            editLastAbout('employee');
-            editLastId(props.id);
             fetch(`${connectionString}/getEmployeeInfo`, {
                 method: 'POST',
                 headers: {
@@ -168,12 +159,10 @@ function Modal(props) {
                                     <span>С</span>
                                     <input type="date" onChange={(e) => {
                                         editFilterStartDate(e.target.value);
-                                        editFilterDatesWereChanged(true);
                                     }} value={filterStartDate}/>
                                     <span>по</span>
                                     <input type="date" onChange={(e) => {
                                         editFilterEndDate(e.target.value);
-                                        editFilterDatesWereChanged(true);
                                     }} value={filterEndDate}/>
                                 </div>
                                 <div>
@@ -186,7 +175,6 @@ function Modal(props) {
                                             editFilterEndDate((filterEndDate.split('-')[0] - 1) + '-08-31');
                                             editFilterStartDate((filterEndDate.split('-')[0] - 1) + '-02-01');
                                         }
-                                        editFilterDatesWereChanged(true);
                                     }}>navigate_before</i>
                                     <i className={`material-icons`} onClick={() => {
                                         if (Number.parseInt(filterEndDate.split('-')[1]) >= 2 && Number.parseInt(filterEndDate.split('-')[1]) <= 8) {
@@ -196,15 +184,14 @@ function Modal(props) {
                                             editFilterEndDate(filterEndDate.split('-')[0] + '-08-31');
                                             editFilterStartDate(filterEndDate.split('-')[0] + '-02-01');
                                         }
-                                        editFilterDatesWereChanged(true);
                                     }}>navigate_next</i>
                                 </div>
                             </div>
                             <div className={`modal-chart-and-table`}>
-                                <DoughnutChart about='employee' id={props.id} startDate={filterStartDate}
+                                <DoughnutChart key={Math.random()} about='employee' id={props.id} startDate={filterStartDate}
                                                endDate={filterEndDate}/>
                                 <div>
-                                    <TableGroupByComponent about="employee" id={props.id} startDate={filterStartDate}
+                                    <TableGroupByComponent key={Math.random()} about="employee" id={props.id} startDate={filterStartDate}
                                                            endDate={filterEndDate}/>
                                 </div>
                             </div>
@@ -219,11 +206,11 @@ function Modal(props) {
                 alert('Нет связи с сервером')
             })
         }
-    })
+    }, [filterStartDate, filterEndDate])
 
     return (
         <Fade>
-            <div className={`modal-wrapper ${props.visible ? 'visible' : ''}`} onClick={(e) => {
+            <div className={`modal-wrapper visible`} onClick={(e) => {
                 props.editVisible(false);
                 editFilterStartDate((new Date().toISOString().split('T')[0].split('-')[0] - 2) + '-01-01');
                 editFilterEndDate(new Date().toISOString().split('T')[0]);

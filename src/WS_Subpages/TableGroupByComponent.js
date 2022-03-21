@@ -10,23 +10,13 @@ function TableGroupByComponent(props) {
     let [marksTotal, editMarksTotal] = useState();
     let [avgMark, editAvgMark] = useState();
 
-    let [lastAbout, editLastAbout] = useState();
-    let [lastId, editLastId] = useState();
-    let [lastStartDate, editLastStartDate] = useState();
-    let [lastEndDate, editLastEndDate] = useState();
-
     //details popup block
     let [detailsBlockVisible, setDetailsBlockVisible] = useState(false);
     let [detailsBlockSubjectId, setDetailsBlockSubjectId] = useState();
     let [detailsBlockSubjectName, setDetailsBlockSubjectName] = useState();
 
     useEffect(() => {
-        if (lastAbout == props.about && lastId == props.id && lastEndDate == props.endDate && lastStartDate == props.startDate) return;
-        editLastEndDate(props.endDate);
-        editLastStartDate(props.startDate);
         if (props.about == 'employee') {
-            editLastAbout(props.about);
-            editLastId(props.id);
             if (props.endDate.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) == null) return;
             if (props.startDate.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) == null) return;
             fetch(`${connectionString}/getEmpMarksGroupedBySubjects`, {
@@ -69,7 +59,7 @@ function TableGroupByComponent(props) {
                 alert('Нет связи с сервером')
             })
         }
-    })
+    }, [])
 
     if (data) {
         return (
@@ -120,12 +110,12 @@ function TableGroupByComponent(props) {
                     </tr>
                     </tbody>
                 </table>
-                {detailsBlockVisible && <TableGroupByComponentDetails visibility={detailsBlockVisible} userId={props.id}
+                {detailsBlockVisible && <TableGroupByComponentDetails userId={props.id}
                                                                       subjectId={detailsBlockSubjectId}
-                                                                      startDate={props.startDate} endDate={props.endDate}
-                                                                      setDetailsBlockVisible={setDetailsBlockVisible}
+                                                                      startDate={props.startDate}
+                                                                      endDate={props.endDate}
                                                                       subjectName={detailsBlockSubjectName}
-                                                                      availableSubjects={data.map((subj) => subj.id)}
+                                                                      key={Math.random()}
                 />}
             </div>
         )

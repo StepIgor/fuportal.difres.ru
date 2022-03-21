@@ -39,7 +39,10 @@ function EmployeesSubpage(props) {
 
     return (
         <div className={`emp-sp-container`}>
-            <Modal visible={modalVisible} editVisible={editModalVisible} about='employee' id={empIdClicked} />
+            {
+                modalVisible &&
+                <Modal editVisible={editModalVisible} about='employee' id={empIdClicked} />
+            }
             <div className={`emp-sp-filter-container`}>
                 <input placeholder="Поиск по параметру..." type="text" maxLength="64" onChange={(e) => {editUserFilterText(e.target.value)}} />
                 <div className={`emp-sp-filter-rb-group`}>

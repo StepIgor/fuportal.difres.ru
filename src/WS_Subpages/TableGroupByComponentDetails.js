@@ -6,23 +6,7 @@ function TableGroupByComponentDetails(props) {
 
     let [data, setData] = useState();
 
-    let [lastUserId, setLastUserId] = useState();
-    let [lastSubjId, setLastSubjId] = useState();
-    let [lastStartDate, setLastStartDate] = useState();
-    let [lastEndDate, setLastEndDate] = useState();
-
     useEffect(() => {
-        if (props.availableSubjects.indexOf(props.subjectId) == -1) {
-            props.setDetailsBlockVisible(false);
-            return
-        }
-        if (props.userId == lastUserId && props.subjectId == lastSubjId && props.endDate == lastEndDate && props.startDate == lastStartDate) return;
-
-        setLastUserId(props.userId);
-        setLastSubjId(props.subjectId);
-        setLastStartDate(props.startDate);
-        setLastEndDate(props.endDate);
-
         fetch(`${connectionString}/getGroupedSubjectMarksFilteredByEmployee`, {
             method: 'POST',
             headers: {
@@ -44,7 +28,7 @@ function TableGroupByComponentDetails(props) {
         }).catch(error => {
             setData('Нет соединения с сервером');
         })
-    })
+    }, []);
 
     if (data != null) {
         if (typeof data === 'string') {
