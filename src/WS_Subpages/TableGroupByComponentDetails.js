@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import "./CSS/TableGroupByDetailsPopup.css";
-import {connectionString} from "./vars";
+import "./CSS/TableGroupByComponentDetails.css";
+import {connectionString} from "../vars";
 
-function TableGroupByDetailsPopup(props) {
+function TableGroupByComponentDetails(props) {
 
     let [data, setData] = useState();
 
@@ -104,4 +104,4 @@ function TableGroupByDetailsPopup(props) {
     }
 }
 
-export default TableGroupByDetailsPopup;
+export default TableGroupByComponentDetails;

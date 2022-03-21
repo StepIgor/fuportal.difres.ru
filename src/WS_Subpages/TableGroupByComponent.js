@@ -1,7 +1,7 @@
 import "./CSS/TableGroupByComponent.css";
 import {useEffect, useState} from "react";
 import {connectionString} from "../vars";
-import TableGroupByDetailsPopup from "../TableGroupByDetailsPopup";
+import TableGroupByComponentDetails from "./TableGroupByComponentDetails";
 
 
 function TableGroupByComponent(props) {
@@ -120,12 +120,12 @@ function TableGroupByComponent(props) {
                     </tr>
                     </tbody>
                 </table>
-                {detailsBlockVisible && <TableGroupByDetailsPopup visibility={detailsBlockVisible} userId={props.id}
-                                                                  subjectId={detailsBlockSubjectId}
-                                                                  startDate={props.startDate} endDate={props.endDate}
-                                                                  setDetailsBlockVisible={setDetailsBlockVisible}
-                                                                  subjectName={detailsBlockSubjectName}
-                                                                  availableSubjects={data.map((subj) => subj.id)}
+                {detailsBlockVisible && <TableGroupByComponentDetails visibility={detailsBlockVisible} userId={props.id}
+                                                                      subjectId={detailsBlockSubjectId}
+                                                                      startDate={props.startDate} endDate={props.endDate}
+                                                                      setDetailsBlockVisible={setDetailsBlockVisible}
+                                                                      subjectName={detailsBlockSubjectName}
+                                                                      availableSubjects={data.map((subj) => subj.id)}
                 />}
             </div>
         )
