@@ -1,0 +1,30 @@
+.mdetails-wrapper {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 8px;
+}
+
+.mdetails-wrapper > div:first-child {
+    font-size: 14px;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 4px;
+}
+
+.mdetails-wrapper > div:first-child > span {
+    font-weight: bold;
+    color: var(--foreground);
+}
+
+@media (min-width: 999px){
+    .mdetails-wrapper > div:first-child {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 998px){
+    .mdetails-wrapper > div:first-child {
+        font-size: 12px;
+    }
+}

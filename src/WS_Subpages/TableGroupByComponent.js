@@ -1,6 +1,7 @@
 import "./CSS/TableGroupByComponent.css";
 import {useEffect, useState} from "react";
 import {connectionString} from "../vars";
+import TableGroupByDetailsPopup from "../TableGroupByDetailsPopup";
 
 
 function TableGroupByComponent(props) {
@@ -13,6 +14,11 @@ function TableGroupByComponent(props) {
     let [lastId, editLastId] = useState();
     let [lastStartDate, editLastStartDate] = useState();
     let [lastEndDate, editLastEndDate] = useState();
+
+    //details popup block
+    let [detailsBlockVisible, setDetailsBlockVisible] = useState(false);
+    let [detailsBlockSubjectId, setDetailsBlockSubjectId] = useState();
+    let [detailsBlockSubjectName, setDetailsBlockSubjectName] = useState();
 
     useEffect(() => {
         if (lastAbout == props.about && lastId == props.id && lastEndDate == props.endDate && lastStartDate == props.startDate) return;
@@ -38,7 +44,19 @@ function TableGroupByComponent(props) {
                 if (answer.status == 'done') {
                     if (answer.marks.length > 0) {
                         editMarksTotal(answer.marks_avg_and_sum.reduce((ac, val) => ac + val['COUNT(mark)'], 0))
-                        let avgMark = (answer.marks_avg_and_sum.reduce((ac, val) => {if (Number.parseInt(val['mark']) > 1) {return ac + (Number.parseInt(val['mark']) * Number.parseInt(val['COUNT(mark)']))} else {return ac}}, 0) / answer.marks_avg_and_sum.reduce((ac, val) => {if (Number.parseInt(val['mark']) > 1) {return ac + val['COUNT(mark)']} else {return ac}}, 0)).toFixed(2);
+                        let avgMark = (answer.marks_avg_and_sum.reduce((ac, val) => {
+                            if (Number.parseInt(val['mark']) > 1) {
+                                return ac + (Number.parseInt(val['mark']) * Number.parseInt(val['COUNT(mark)']))
+                            } else {
+                                return ac
+                            }
+                        }, 0) / answer.marks_avg_and_sum.reduce((ac, val) => {
+                            if (Number.parseInt(val['mark']) > 1) {
+                                return ac + val['COUNT(mark)']
+                            } else {
+                                return ac
+                            }
+                        }, 0)).toFixed(2);
                         editAvgMark(avgMark == 'NaN' ? '(нет)' : avgMark);
                         editData(answer.marks);
                     } else {
@@ -55,8 +73,9 @@ function TableGroupByComponent(props) {
 
     if (data) {
         return (
-            <table>
-                <thead>
+            <div className={`tableGroupBy-wrapper`}>
+                <table className={`tableGroupBy-table`}>
+                    <thead>
                     <tr>
                         <td>
                             Дисциплина
@@ -65,11 +84,15 @@ function TableGroupByComponent(props) {
                             Кол-во оценок
                         </td>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {data.map((subj, ind) => {
                         return (
-                            <tr key={ind}>
+                            <tr key={ind} onClick={() => {
+                                setDetailsBlockSubjectId(subj.id);
+                                setDetailsBlockSubjectName(subj.name);
+                                setDetailsBlockVisible(true);
+                            }}>
                                 <td>
                                     {subj.name}
                                 </td>
@@ -95,8 +118,16 @@ function TableGroupByComponent(props) {
                             {avgMark}
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+                {detailsBlockVisible && <TableGroupByDetailsPopup visibility={detailsBlockVisible} userId={props.id}
+                                                                  subjectId={detailsBlockSubjectId}
+                                                                  startDate={props.startDate} endDate={props.endDate}
+                                                                  setDetailsBlockVisible={setDetailsBlockVisible}
+                                                                  subjectName={detailsBlockSubjectName}
+                                                                  availableSubjects={data.map((subj) => subj.id)}
+                />}
+            </div>
         )
     } else {
         return (
