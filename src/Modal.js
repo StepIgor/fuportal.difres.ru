@@ -43,7 +43,26 @@ function Modal(props) {
                 })
             }).then(res => res.json()).then(answer => {
                 if (answer.status == 'done') {
-                    editModalContent(answer);
+                    editModalContent(answer.emp);
+                } else {
+                    editModalContent(answer.details);
+                }
+            }).catch(error => {
+                alert('Нет связи с сервером')
+            })
+        } else if (props.about == 'student') {
+            fetch(`${connectionString}/getStudentInfo`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    session: localStorage['session'],
+                    id: props.id
+                })
+            }).then(res => res.json()).then(answer => {
+                if (answer.status == 'done') {
+                    editModalContent(answer.stud);
                 } else {
                     editModalContent(answer.details);
                 }
@@ -127,7 +146,7 @@ function Modal(props) {
                                 ФИО:
                             </div>
                             <div>
-                                {modalContent.emp.surname} {modalContent.emp.name} {modalContent.emp.patron}
+                                {modalContent.surname} {modalContent.name} {modalContent.patron}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -135,7 +154,7 @@ function Modal(props) {
                                 Структурное подразделение:
                             </div>
                             <div>
-                                {modalContent.emp.dname} ({modalContent.emp.fname})
+                                {modalContent.dname} ({modalContent.fname})
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -143,7 +162,7 @@ function Modal(props) {
                                 Должность:
                             </div>
                             <div>
-                                {modalContent.emp.pname}
+                                {modalContent.pname}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -151,7 +170,7 @@ function Modal(props) {
                                 Дата рождения:
                             </div>
                             <div>
-                                {new Date(modalContent.emp.birthdate).toLocaleDateString()}
+                                {new Date(modalContent.birthdate).toLocaleDateString()}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -159,7 +178,7 @@ function Modal(props) {
                                 Возраст:
                             </div>
                             <div>
-                                {Math.floor((new Date() - new Date(modalContent.emp.birthdate)) / (1000 * 60 * 60 * 24 * 365))}
+                                {Math.floor((new Date() - new Date(modalContent.birthdate)) / (1000 * 60 * 60 * 24 * 365))}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -167,7 +186,7 @@ function Modal(props) {
                                 Ученое звание:
                             </div>
                             <div>
-                                {modalContent.emp.aname}
+                                {modalContent.aname}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -175,7 +194,7 @@ function Modal(props) {
                                 Образование:
                             </div>
                             <div>
-                                {modalContent.emp.einame}
+                                {modalContent.einame}
                             </div>
                         </div>
                         <div className={`modal-block`}>
@@ -194,7 +213,7 @@ function Modal(props) {
                                     <tbody>
                                     <tr>
                                         <td>
-                                            {modalContent.emp.qual_up}
+                                            {modalContent.qual_up}
                                         </td>
                                     </tr>
                                     </tbody>
@@ -247,6 +266,125 @@ function Modal(props) {
                                                            startDate={filterStartDate}
                                                            endDate={filterEndDate}/>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    {/*STUDENT INFO*/}
+                    {modalContent &&
+                    typeof modalContent !== 'string' &&
+                    props.about == 'student' &&
+                    <div className={`modal-content`}>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                ФИО:
+                            </div>
+                            <div>
+                                {modalContent.surname} {modalContent.name} {modalContent.patron}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Год поступления:
+                            </div>
+                            <div>
+                                {modalContent.enroll_year}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Факультет:
+                            </div>
+                            <div>
+                                {modalContent.fname}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Группа:
+                            </div>
+                            <div>
+                                {modalContent.gname}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Студенческий номер:
+                            </div>
+                            <div>
+                                {modalContent.id}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Статус:
+                            </div>
+                            <div>
+                                {modalContent.status}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Направление подготовки:
+                            </div>
+                            <div>
+                                {modalContent.dname}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Профиль подготовки:
+                            </div>
+                            <div>
+                                {modalContent.pname}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Курс обучения:
+                            </div>
+                            <div>
+                                {modalContent.stud_year}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Форма обучения:
+                            </div>
+                            <div>
+                                {modalContent.stud_form}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Основа обучения:
+                            </div>
+                            <div>
+                                {modalContent.funding}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Регион:
+                            </div>
+                            <div>
+                                {modalContent.region}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Дата рождения:
+                            </div>
+                            <div>
+                                {new Date(modalContent.birthdate).toLocaleDateString()}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Пол:
+                            </div>
+                            <div>
+                                {modalContent.sex == 'М'? 'Мужской' : 'Женский'}
                             </div>
                         </div>
                     </div>

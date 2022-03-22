@@ -1,6 +1,7 @@
 import "./CSS/StudentsSubpage.css";
 import {useEffect, useState} from "react";
 import {connectionString} from "../vars";
+import Modal from "../Modal";
 
 function StudentsSubpage(props){
 
@@ -11,6 +12,10 @@ function StudentsSubpage(props){
     let [showExtendedFilterForm, editShowExtendedFilterForm] = useState(false);
     let [extraUserFilterText, editExtraUserFilterText] = useState();
     let [extraFilterMode, editExtraFilterMode] = useState('fac_name');
+
+    //stud card
+    let [modalVisible, editModalVisible] = useState(false);
+    let [studIdClicked, editStudIdClicked] = useState();
 
     useEffect(() => {
         if (students != null) return;
@@ -36,6 +41,10 @@ function StudentsSubpage(props){
 
     return (
         <div className={`stud-sp-container`}>
+            {
+                modalVisible &&
+                <Modal editVisible={editModalVisible} about='student' id={studIdClicked} />
+            }
             <div className={`stud-sp-filter-container`}>
                 <input placeholder="Поиск по параметру..." type="text" maxLength="64" onChange={(e) => {editUserFilterText(e.target.value)}} />
                 <div className={`stud-sp-filter-rb-group`}>
@@ -206,7 +215,7 @@ function StudentsSubpage(props){
                             }
                         }).map((stud, ind) => {
                             return (
-                                <tr key={stud.id}>
+                                <tr key={stud.id} onClick={()=>{editStudIdClicked(stud.id); editModalVisible(true);}}>
                                     <td>
                                         {ind + 1}
                                     </td>
