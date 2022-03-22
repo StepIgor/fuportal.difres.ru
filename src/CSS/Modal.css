@@ -230,6 +230,10 @@
     .modal-chart-and-table div:last-child table {
         width: 100%;
     }
+
+    .vertical-bar-chart-container{
+        max-width: 50%;
+    }
 }
 
 .modal-date-filter-container > div {

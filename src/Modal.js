@@ -4,6 +4,7 @@ import {Fade} from "react-reveal";
 import {connectionString} from "./vars";
 import DoughnutChart from "./WS_Subpages/DoughnutChart";
 import TableGroupByComponent from "./WS_Subpages/TableGroupByComponent";
+import VerticalBarChart from "./WS_Subpages/VerticalBarChart";
 
 function Modal(props) {
 
@@ -392,9 +393,9 @@ function Modal(props) {
                                 Статистика по оценкам:
                             </div>
                             <div className={`modal-chart-and-table`}>
-                                <DoughnutChart key={Math.random()} about='student' id={props.id}/>
-                                <div>
-
+                                <DoughnutChart about='student' id={props.id}/>
+                                <div className={`vertical-bar-chart-container`}>
+                                    <VerticalBarChart about='student' id={props.id} />
                                 </div>
                             </div>
                         </div>
