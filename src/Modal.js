@@ -23,37 +23,10 @@ function Modal(props) {
                 })
             }).then(res => res.json()).then(answer => {
                 if (answer.status == 'done') {
-                    editModalContent(<div className={`modal-content`}>
-                        <div className={`modal-content-row`}>
-                            <div>
-                                ФИО:
-                            </div>
-                            <div>
-                                {answer.surname} {answer.name} {answer.patron}
-                            </div>
-                        </div>
-                        <div className={`modal-content-row`}>
-                            <div>
-                                Логин:
-                            </div>
-                            <div>
-                                {answer.login}
-                            </div>
-                        </div>
-                        <div className={`modal-content-row`}>
-                            <div>
-                                Факультет:
-                            </div>
-                            <div>
-                                {answer.fac == null ? '(нет)' : answer.fac}
-                            </div>
-                        </div>
-                    </div>);
+                    editModalContent(answer);
                 } else {
                     localStorage['session'] = 'none'
-                    editModalContent(<div className={`modal-content`}>
-                        Не выполнен вход в аккаунт
-                    </div>);
+                    editModalContent("Не выполнен вход в аккаунт");
                 }
             }).catch(error => {
                 alert('Нет связи с сервером')
@@ -70,13 +43,91 @@ function Modal(props) {
                 })
             }).then(res => res.json()).then(answer => {
                 if (answer.status == 'done') {
-                    editModalContent(<div className={`modal-content`}>
+                    editModalContent(answer);
+                } else {
+                    editModalContent(answer.details);
+                }
+            }).catch(error => {
+                alert('Нет связи с сервером')
+            })
+        }
+    }, []);
+
+
+    return (
+        <Fade>
+            <div className={`modal-wrapper visible`} onClick={(e) => {
+                props.editVisible(false);
+                editFilterStartDate((new Date().toISOString().split('T')[0].split('-')[0] - 2) + '-01-01');
+                editFilterEndDate(new Date().toISOString().split('T')[0]);
+            }}>
+                <div className='modal-window' onClick={(e) => {
+                    e.stopPropagation()
+                }}>
+                    <div className={`modal-title`}>
+                        <div>
+                            Информация
+                            о {props.about == 'user' ? 'пользователе' : props.about == 'student' ? 'студенте' : 'сотруднике'}
+                        </div>
+                        <div onClick={() => {
+                            props.editVisible(false);
+                            editFilterStartDate((new Date().toISOString().split('T')[0].split('-')[0] - 2) + '-01-01');
+                            editFilterEndDate(new Date().toISOString().split('T')[0]);
+                        }}>
+                            <i className={`material-icons modal-close-but`}>close</i>
+                        </div>
+                    </div>
+                    <div className={`hor-line-full`}>
+                    </div>
+                    {/*ERROR MODAL*/}
+                    {modalContent &&
+                    typeof modalContent === 'string' &&
+                    <div className={`modal-content`}>
+                        {modalContent}
+                    </div>
+                    }
+                    {/*USER MODAL*/}
+                    {modalContent &&
+                    typeof modalContent !== 'string' &&
+                    props.about == 'user' &&
+                    <div className={`modal-content`}>
                         <div className={`modal-content-row`}>
                             <div>
                                 ФИО:
                             </div>
                             <div>
-                                {answer.emp.surname} {answer.emp.name} {answer.emp.patron}
+                                {modalContent.surname} {modalContent.name} {modalContent.patron}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Логин:
+                            </div>
+                            <div>
+                                {modalContent.login}
+                            </div>
+                        </div>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                Факультет:
+                            </div>
+                            <div>
+                                {modalContent.fac == null ? '(нет)' : modalContent.fac}
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    {/*EMPLOYEE MODAL*/}
+                    {modalContent &&
+                    typeof modalContent !== 'string' &&
+                    props.about == 'employee' &&
+                    <div className={`modal-content`}>
+                        <div className={`modal-content-row`}>
+                            <div>
+                                ФИО:
+                            </div>
+                            <div>
+                                {modalContent.emp.surname} {modalContent.emp.name} {modalContent.emp.patron}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -84,7 +135,7 @@ function Modal(props) {
                                 Структурное подразделение:
                             </div>
                             <div>
-                                {answer.emp.dname} ({answer.emp.fname})
+                                {modalContent.emp.dname} ({modalContent.emp.fname})
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -92,7 +143,7 @@ function Modal(props) {
                                 Должность:
                             </div>
                             <div>
-                                {answer.emp.pname}
+                                {modalContent.emp.pname}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -100,7 +151,7 @@ function Modal(props) {
                                 Дата рождения:
                             </div>
                             <div>
-                                {new Date(answer.emp.birthdate).toLocaleDateString()}
+                                {new Date(modalContent.emp.birthdate).toLocaleDateString()}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -108,7 +159,7 @@ function Modal(props) {
                                 Возраст:
                             </div>
                             <div>
-                                {Math.floor((new Date() - new Date(answer.emp.birthdate)) / (1000 * 60 * 60 * 24 * 365))}
+                                {Math.floor((new Date() - new Date(modalContent.emp.birthdate)) / (1000 * 60 * 60 * 24 * 365))}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -116,7 +167,7 @@ function Modal(props) {
                                 Ученое звание:
                             </div>
                             <div>
-                                {answer.emp.aname}
+                                {modalContent.emp.aname}
                             </div>
                         </div>
                         <div className={`modal-content-row`}>
@@ -124,7 +175,7 @@ function Modal(props) {
                                 Образование:
                             </div>
                             <div>
-                                {answer.emp.einame}
+                                {modalContent.emp.einame}
                             </div>
                         </div>
                         <div className={`modal-block`}>
@@ -143,7 +194,7 @@ function Modal(props) {
                                     <tbody>
                                     <tr>
                                         <td>
-                                            {answer.emp.qual_up}
+                                            {modalContent.emp.qual_up}
                                         </td>
                                     </tr>
                                     </tbody>
@@ -188,52 +239,18 @@ function Modal(props) {
                                 </div>
                             </div>
                             <div className={`modal-chart-and-table`}>
-                                <DoughnutChart key={Math.random()} about='employee' id={props.id} startDate={filterStartDate}
+                                <DoughnutChart key={Math.random()} about='employee' id={props.id}
+                                               startDate={filterStartDate}
                                                endDate={filterEndDate}/>
                                 <div>
-                                    <TableGroupByComponent key={Math.random()} about="employee" id={props.id} startDate={filterStartDate}
+                                    <TableGroupByComponent key={Math.random()} about="employee" id={props.id}
+                                                           startDate={filterStartDate}
                                                            endDate={filterEndDate}/>
                                 </div>
                             </div>
                         </div>
-                    </div>);
-                } else {
-                    editModalContent(<div className={`modal-content`}>
-                        {answer.details}
-                    </div>);
-                }
-            }).catch(error => {
-                alert('Нет связи с сервером')
-            })
-        }
-    }, [filterStartDate, filterEndDate])
-
-    return (
-        <Fade>
-            <div className={`modal-wrapper visible`} onClick={(e) => {
-                props.editVisible(false);
-                editFilterStartDate((new Date().toISOString().split('T')[0].split('-')[0] - 2) + '-01-01');
-                editFilterEndDate(new Date().toISOString().split('T')[0]);
-            }}>
-                <div className='modal-window' onClick={(e) => {
-                    e.stopPropagation()
-                }}>
-                    <div className={`modal-title`}>
-                        <div>
-                            Информация
-                            о {props.about == 'user' ? 'пользователе' : props.about == 'student' ? 'студенте' : 'сотруднике'}
-                        </div>
-                        <div onClick={() => {
-                            props.editVisible(false);
-                            editFilterStartDate((new Date().toISOString().split('T')[0].split('-')[0] - 2) + '-01-01');
-                            editFilterEndDate(new Date().toISOString().split('T')[0]);
-                        }}>
-                            <i className={`material-icons modal-close-but`}>close</i>
-                        </div>
                     </div>
-                    <div className={`hor-line-full`}>
-                    </div>
-                    {modalContent && modalContent}
+                    }
                 </div>
             </div>
         </Fade>
