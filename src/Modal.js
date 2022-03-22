@@ -384,7 +384,18 @@ function Modal(props) {
                                 Пол:
                             </div>
                             <div>
-                                {modalContent.sex == 'М'? 'Мужской' : 'Женский'}
+                                {modalContent.sex == 'М' ? 'Мужской' : 'Женский'}
+                            </div>
+                        </div>
+                        <div className={`modal-block`}>
+                            <div>
+                                Статистика по оценкам:
+                            </div>
+                            <div className={`modal-chart-and-table`}>
+                                <DoughnutChart key={Math.random()} about='student' id={props.id}/>
+                                <div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
