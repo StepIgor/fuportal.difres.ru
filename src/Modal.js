@@ -434,6 +434,52 @@ function Modal(props) {
                                     {modalContent.name}
                                 </div>
                             </div>
+                            <div className={`modal-block`}>
+                                <div>
+                                    Статистика выставляемых оценок:
+                                </div>
+                                <div className={`modal-date-filter-container`}>
+                                    <div>
+                                        <span>С</span>
+                                        <input type="date" onChange={(e) => {
+                                            editFilterStartDate(e.target.value);
+                                        }} value={filterStartDate}/>
+                                        <span>по</span>
+                                        <input type="date" onChange={(e) => {
+                                            editFilterEndDate(e.target.value);
+                                        }} value={filterEndDate}/>
+                                    </div>
+                                    <div>
+                                        <span>По семестрам:</span>
+                                        <i className={`material-icons`} onClick={() => {
+                                            if (Number.parseInt(filterEndDate.split('-')[1]) >= 2 && Number.parseInt(filterEndDate.split('-')[1]) <= 8) {
+                                                editFilterEndDate(filterEndDate.split('-')[0] + '-01-31');
+                                                editFilterStartDate((filterEndDate.split('-')[0] - 1) + '-09-01');
+                                            } else {
+                                                editFilterEndDate((filterEndDate.split('-')[0] - 1) + '-08-31');
+                                                editFilterStartDate((filterEndDate.split('-')[0] - 1) + '-02-01');
+                                            }
+                                        }}>navigate_before</i>
+                                        <i className={`material-icons`} onClick={() => {
+                                            if (Number.parseInt(filterEndDate.split('-')[1]) >= 2 && Number.parseInt(filterEndDate.split('-')[1]) <= 8) {
+                                                editFilterEndDate((Number.parseInt(filterEndDate.split('-')[0]) + 1) + '-01-31');
+                                                editFilterStartDate(filterEndDate.split('-')[0] + '-09-01');
+                                            } else {
+                                                editFilterEndDate(filterEndDate.split('-')[0] + '-08-31');
+                                                editFilterStartDate(filterEndDate.split('-')[0] + '-02-01');
+                                            }
+                                        }}>navigate_next</i>
+                                    </div>
+                                </div>
+                                <div className={`modal-chart-and-table`}>
+                                    <DoughnutChart key={Math.random()} about='subject' id={props.id}
+                                                   startDate={filterStartDate}
+                                                   endDate={filterEndDate}/>
+                                    <div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     }
                 </div>
