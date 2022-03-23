@@ -70,6 +70,25 @@ function Modal(props) {
             }).catch(error => {
                 alert('Нет связи с сервером')
             })
+        } else if (props.about == 'subject'){
+            fetch(`${connectionString}/getSubjectInfo`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    session: localStorage['session'],
+                    id: props.id
+                })
+            }).then(res => res.json()).then(answer => {
+                if (answer.status == 'done') {
+                    editModalContent(answer);
+                } else {
+                    editModalContent(answer.details);
+                }
+            }).catch(error => {
+                alert('Нет связи с сервером')
+            })
         }
     }, []);
 
@@ -87,7 +106,7 @@ function Modal(props) {
                     <div className={`modal-title`}>
                         <div>
                             Информация
-                            о {props.about == 'user' ? 'пользователе' : props.about == 'student' ? 'студенте' : 'сотруднике'}
+                            о {props.about == 'user' ? 'пользователе' : props.about == 'student' ? 'студенте' : props.about == 'subject' ? 'дисциплине' : 'сотруднике'}
                         </div>
                         <div onClick={() => {
                             props.editVisible(false);
@@ -400,6 +419,22 @@ function Modal(props) {
                             </div>
                         </div>
                     </div>
+                    }
+                    {/*SUBJECT MODAL*/}
+                    {
+                        modalContent &&
+                        typeof modalContent !== 'string' &&
+                        props.about == 'subject' &&
+                        <div className={`modal-content`}>
+                            <div className={`modal-content-row`}>
+                                <div>
+                                    Название:
+                                </div>
+                                <div>
+                                    {modalContent.name}
+                                </div>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>

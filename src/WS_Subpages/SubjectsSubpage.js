@@ -1,11 +1,16 @@
 import "./CSS/SubjectsSubpage.css";
 import {useEffect, useState} from "react";
 import {connectionString} from "../vars";
+import Modal from "../Modal";
 
 function SubjectsSubpage(props){
 
     let [subjects, editSubjects] = useState()
     let [userFilterText, editUserFilterText] = useState()
+
+    //subject card
+    let [modalVisible, editModalVisible] = useState(false);
+    let [subjIdClicked, editSubjIdClicked] = useState();
 
     useEffect(() => {
         if (subjects != null) return;
@@ -31,6 +36,10 @@ function SubjectsSubpage(props){
 
     return (
         <div className={`subj-sp-container`}>
+            {
+                modalVisible &&
+                <Modal editVisible={editModalVisible} about='subject' id={subjIdClicked} />
+            }
             <div className={`subj-sp-filter-container`}>
                 <input placeholder="Поиск по названию..." type="text" maxLength="64" onChange={(e) => {editUserFilterText(e.target.value)}} />
             </div>
@@ -56,7 +65,7 @@ function SubjectsSubpage(props){
                             return ''+a.name.localeCompare(b.name);
                         }).map((subj, ind) => {
                             return (
-                                <tr key={subj.id}>
+                                <tr key={subj.id} onClick={()=>{editSubjIdClicked(subj.id); editModalVisible(true);}}>
                                     <td>
                                         {ind + 1}
                                     </td>
