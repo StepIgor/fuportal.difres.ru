@@ -1,7 +1,6 @@
 .stud-sp-table-container {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: center;
 }
 
 .stud-sp-table-container > table > thead {
@@ -78,6 +77,7 @@
 
     .stud-sp-table-container{
         margin: 24px 12px;
+        justify-content: center;
     }
 
     .stud-sp-filter-container {
@@ -118,6 +118,7 @@
 @media (max-width: 998px){
     .stud-sp-table-container{
         margin: 24px 4px;
+        overflow-x: auto;
     }
 
     .stud-sp-filter-container {
@@ -126,7 +127,7 @@
 
     .stud-sp-table-container > table {
         font-size: 10px;
-        word-break: break-all;
+        justify-content: flex-start;
     }
 
     .stud-sp-table-container > table > tbody td {

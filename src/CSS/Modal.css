@@ -200,6 +200,10 @@
     .modal-chart-and-table > *:first-child {
         max-height: 150px;
     }
+
+    .subject-plans-container {
+        overflow-x: auto;
+    }
 }
 
 @media (min-width: 999px){

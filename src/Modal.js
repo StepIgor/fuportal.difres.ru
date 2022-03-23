@@ -475,8 +475,8 @@ function Modal(props) {
                                     <DoughnutChart key={Math.random()} about='subject' id={props.id}
                                                    startDate={filterStartDate}
                                                    endDate={filterEndDate}/>
-                                    <div>
-
+                                    <div className={`subject-plans-container`}>
+                                        <TableGroupByComponent about="subject" id={props.id} />
                                     </div>
                                 </div>
                             </div>

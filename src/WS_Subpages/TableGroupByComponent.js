@@ -58,67 +58,162 @@ function TableGroupByComponent(props) {
             }).catch((error) => {
                 alert('Нет связи с сервером')
             })
+        } else if (props.about == 'subject') {
+            fetch(`${connectionString}/getSubjectAcademicPlans`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    session: localStorage['session'],
+                    id: props.id
+                })
+            }).then((res) => res.json()).then((answer) => {
+                if (answer.status == 'done') {
+                    if (answer.plans.length > 0) {
+                        editData(answer.plans.map(row => {
+                            let output_row = {
+                                "cform": row.cform,
+                                "fname": row.name,
+                                "year": row.my.split('.')[1],
+                                "sform": row.sform
+                            }
+                            let semester;
+                            if (Number.parseInt(row.my.split('.')[0]) < 5) {
+                                semester = 0;
+                            } else {
+                                semester = 0;
+                            }
+                            output_row.semester = semester;
+                            return output_row;
+                        }))
+                    } else {
+                        editData(null);
+                    }
+                } else {
+                    editData(null);
+                }
+            }).catch((error) => {
+                alert('Нет связи с сервером')
+            })
         }
     }, [])
 
     if (data) {
-        return (
-            <div className={`tableGroupBy-wrapper`}>
-                <table className={`tableGroupBy-table`}>
-                    <thead>
-                    <tr>
-                        <td>
-                            Дисциплина
-                        </td>
-                        <td>
-                            Кол-во оценок
-                        </td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {data.map((subj, ind) => {
-                        return (
-                            <tr key={ind} onClick={() => {
-                                setDetailsBlockSubjectId(subj.id);
-                                setDetailsBlockSubjectName(subj.name);
-                                setDetailsBlockVisible(true);
-                            }}>
-                                <td>
-                                    {subj.name}
-                                </td>
-                                <td>
-                                    {subj['COUNT(m.mark)']}
-                                </td>
-                            </tr>
-                        )
-                    })}
-                    <tr>
-                        <td>
-                            <b>Всего оценок</b>
-                        </td>
-                        <td className={`total-label`}>
-                            {marksTotal}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Средний балл</b>
-                        </td>
-                        <td className={`total-label`}>
-                            {avgMark}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                {detailsBlockVisible && <TableGroupByComponentDetails userId={props.id}
-                                                                      subjectId={detailsBlockSubjectId}
-                                                                      startDate={props.startDate}
-                                                                      endDate={props.endDate}
-                                                                      subjectName={detailsBlockSubjectName}
-                                                                      key={Math.random()}
-                />}
-            </div>
-        )
+        if (props.about == 'employee')
+            return (
+                <div className={`tableGroupBy-wrapper`}>
+                    <table className={`tableGroupBy-table`}>
+                        <thead>
+                        <tr>
+                            <td>
+                                Дисциплина
+                            </td>
+                            <td>
+                                Кол-во оценок
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {data.map((subj, ind) => {
+                            return (
+                                <tr key={ind} onClick={() => {
+                                    setDetailsBlockSubjectId(subj.id);
+                                    setDetailsBlockSubjectName(subj.name);
+                                    setDetailsBlockVisible(true);
+                                }}>
+                                    <td>
+                                        {subj.name}
+                                    </td>
+                                    <td>
+                                        {subj['COUNT(m.mark)']}
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                        <tr>
+                            <td>
+                                <b>Всего оценок</b>
+                            </td>
+                            <td className={`total-label`}>
+                                {marksTotal}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Средний балл</b>
+                            </td>
+                            <td className={`total-label`}>
+                                {avgMark}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    {detailsBlockVisible && <TableGroupByComponentDetails userId={props.id}
+                                                                          subjectId={detailsBlockSubjectId}
+                                                                          startDate={props.startDate}
+                                                                          endDate={props.endDate}
+                                                                          subjectName={detailsBlockSubjectName}
+                                                                          key={Math.random()}
+                    />}
+                </div>
+            );
+
+        if (props.about == 'subject')
+            return (
+                <div className={`tableGroupBy-wrapper`}>
+                    <table className={`tableGroupBy-table`}>
+                        <thead>
+                        <tr>
+                            <td>
+                                №
+                            </td>
+                            <td>
+                                Год
+                            </td>
+                            <td>
+                                Форма контроля
+                            </td>
+                            <td>
+                                Факультет
+                            </td>
+                            <td>
+                                Форма обучения
+                            </td>
+                            <td>
+                                Семестр
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {data.sort((a, b) => Number.parseInt(a["year"]) - Number.parseInt(b["year"])).map((plan, ind) => {
+                            return (
+                                <tr key={ind}>
+                                    <td>
+                                        {ind + 1}
+                                    </td>
+                                    <td>
+                                        {plan["year"]}
+                                    </td>
+                                    <td>
+                                        {plan["cform"]}
+                                    </td>
+                                    <td>
+                                        {plan["fname"]}
+                                    </td>
+                                    <td>
+                                        {plan["sform"]}
+                                    </td>
+                                    <td>
+                                        {plan["semester"]}
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                    </table>
+                </div>
+            );
     } else {
         return (
             <div></div>
