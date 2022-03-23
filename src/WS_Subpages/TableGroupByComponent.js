@@ -80,9 +80,9 @@ function TableGroupByComponent(props) {
                             }
                             let semester;
                             if (Number.parseInt(row.my.split('.')[0]) < 5) {
-                                semester = 0;
+                                semester = 2 * Number.parseInt(row["ydiff"]) - 1;
                             } else {
-                                semester = 0;
+                                semester = 2 * Number.parseInt(row["ydiff"]);
                             }
                             output_row.semester = semester;
                             return output_row;
