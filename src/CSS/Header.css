@@ -82,6 +82,10 @@
     .moodle-menu-mob {
         display: none;
     }
+
+    .hd-searchbar-container {
+        position: relative;
+    }
 }
 
 @media (max-width: 998px){
@@ -105,6 +109,7 @@
     .hd-searchbar-container {
         margin-top: 18px;
         width: 100%;
+        position: relative;
     }
 
     .hd-searchbar {

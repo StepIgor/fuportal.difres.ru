@@ -1,0 +1,40 @@
+.sr-wrapper {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 38px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    color: black;
+    display: flex;
+    flex-flow: column nowrap;
+    box-shadow: 0px 2px 16px 1px gray;
+}
+
+.sr-result-line {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.sr-result-line:hover {
+    background: var(--tablerowhover);
+}
+
+.sr-result-line > div:first-child {
+    font-size: 14px;
+    color: var(--foreground);
+    font-weight: bold;
+}
+
+.sr-result-line > div:last-child {
+    font-size: 12px;
+    color: grey;
+}
+
+.sr-waiting-for-answer {
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: grey;
+}
