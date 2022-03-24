@@ -20,7 +20,7 @@ function SearchResultsBlock(props) {
             })
         }).then(res => res.json()).then(answer => {
             if (answer.status == 'done') {
-                setSearchResult(answer.results);
+                setSearchResult(answer.results.slice(0, 8));
             } else {
                 setSearchResult(answer.details);
             }
