@@ -8,14 +8,6 @@ function App() {
     let [page, editPage] = useState();
 
     useEffect(() => {
-        //регистрация Service-Worker
-        navigator.serviceWorker.register(
-            'serviceWorker.js', {scope: '/'}
-        ).then(function (registration) {
-        }).catch(function (err) {
-            throw new Error('ServiceWorker error: ' + err);
-        });
-
         if (localStorage['session'] == null) {
             localStorage['session'] = 'none';
         }

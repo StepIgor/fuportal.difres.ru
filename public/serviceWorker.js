@@ -1,14 +1,14 @@
 let CACHE_NAME = 'faportal_cache',
     cacheUrls = [
-        '/build/bundle.js',
-        '/build/bundle.css',
         'font.woff2',
         'icon.css',
         'logo.png',
         'logo2.png',
         'favicon.png',
         'index.html',
-        '/'
+        'static/css/main.45abed99.css',
+        'static/js/main.d5330640.js',
+        'static/js/787.731f907a.chunk.js'
     ];
 
 self.addEventListener('install', function (event) {
