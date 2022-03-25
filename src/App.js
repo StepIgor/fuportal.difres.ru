@@ -8,6 +8,14 @@ function App() {
     let [page, editPage] = useState();
 
     useEffect(() => {
+        //регистрация Service-Worker
+        navigator.serviceWorker.register(
+            'serviceWorker.js', {scope: '/'}
+        ).then(function (registration) {
+        }).catch(function (err) {
+            throw new Error('ServiceWorker error: ' + err);
+        });
+
         if (localStorage['session'] == null) {
             localStorage['session'] = 'none';
         }
@@ -42,7 +50,7 @@ function App() {
         }
     })
 
-    return page ? page == 'login' ? <LoginPage editPage={editPage} /> : <WorkspacePage editPage={editPage} /> : null
+    return page ? page == 'login' ? <LoginPage editPage={editPage}/> : <WorkspacePage editPage={editPage}/> : null
 }
 
 export default App;
