@@ -6,9 +6,12 @@ let CACHE_NAME = 'faportal_cache',
         'logo2.png',
         'favicon.png',
         'index.html',
-        'static/css/main.45abed99.css',
+        'static/css/main.d6d7954a.css',
         'static/js/main.d5330640.js',
-        'static/js/787.731f907a.chunk.js'
+        'static/js/787.731f907a.chunk.js',
+        'static/css/main.d6d7954a.css.map',
+        'static/js/main.d5330640.js.map',
+        'static/js/787.731f907a.chunk.js.map'
     ];
 
 self.addEventListener('install', function (event) {

@@ -225,6 +225,7 @@
     .modal-chart-and-table > *:first-child {
         max-height: 200px;
         max-width: 50%;
+        min-width: 50%;
     }
 
     .modal-chart-and-table div:last-child {
